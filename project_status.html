@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Status</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f13;
+    color: #e2e8f0;
+    padding: 20px 16px;
+    font-size: 13px;
+  }
+  h1 { font-size: 20px; font-weight: 800; margin-bottom: 4px; color: #f8fafc; }
+  .subtitle { font-size: 12px; color: #64748b; margin-bottom: 10px; }
+  .status-sync {
+    font-size: 11px;
+    color: #8fa4bd;
+    margin-bottom: 16px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #141c2a;
+    border: 1px solid #1f2a3d;
+    display: inline-block;
+  }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab {
+    padding: 8px 16px; border-radius: 8px; font-size: 12px;
+    font-weight: 600; cursor: pointer; border: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .tab.active { background: #6366f1; color: #fff; }
+  .tab.inactive { background: #1e1e2e; color: #94a3b8; border-color: #2d2d3d; }
+  .tab.inactive:hover { background: #2d2d3d; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Status cards */
+  .status-card {
+    border-radius: 12px; margin-bottom: 10px;
+    border: 1px solid transparent; overflow: hidden;
+  }
+  .status-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px; cursor: pointer;
+  }
+  .status-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .status-title { font-size: 14px; font-weight: 700; flex: 1; }
+  .status-sub { font-size: 11px; margin-top: 2px; opacity: 0.75; }
+  .status-badge {
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px; flex-shrink: 0;
+  }
+  .chevron { font-size: 11px; color: #64748b; margin-left: 6px; transition: transform 0.2s; }
+  .chevron.open { transform: rotate(90deg); }
+
+  .status-body { padding: 0 16px 14px; display: none; font-size: 12px; line-height: 1.7; }
+  .status-body.open { display: block; }
+
+  .detail-item {
+    display: flex; gap: 8px; align-items: flex-start;
+    margin-bottom: 5px; color: #94a3b8;
+  }
+  .detail-dot { flex-shrink: 0; margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; }
+
+  /* Done */
+  .s-done { background: #0a1f0a; border-color: #166534; }
+  .s-done .status-header { background: #0d2b0d; }
+  .s-done .status-num { background: #166534; }
+  .s-done .status-badge { background: #14532d; color: #4ade80; }
+  .s-done .detail-dot { background: #22c55e; }
+
+  /* In progress */
+  .s-progress { background: #1a1500; border-color: #854d0e; }
+  .s-progress .status-header { background: #231b00; }
+  .s-progress .status-num { background: #854d0e; }
+  .s-progress .status-badge { background: #713f12; color: #fbbf24; }
+  .s-progress .detail-dot { background: #f59e0b; }
+
+  /* Todo */
+  .s-todo { background: #0f0f1a; border-color: #2d2d3d; }
+  .s-todo .status-header { background: #1a1a2e; }
+  .s-todo .status-num { background: #2d2d3d; }
+  .s-todo .status-badge { background: #1e1e2e; color: #64748b; }
+  .s-todo .detail-dot { background: #475569; }
+
+  /* Files card */
+  .files-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .file-card {
+    background: #1e1e2e; border-radius: 10px;
+    padding: 10px 12px; border: 1px solid #2d2d3d;
+    font-size: 12px;
+  }
+  .file-name { font-weight: 700; color: #a5b4fc; margin-bottom: 4px; font-size: 12px; }
+  .file-desc { color: #64748b; font-size: 11px; line-height: 1.5; }
+  .file-status {
+    display: inline-block; margin-top: 5px;
+    font-size: 10px; font-weight: 700; padding: 1px 6px;
+    border-radius: 10px;
+  }
+  .fs-done { background: #14532d; color: #4ade80; }
+  .fs-progress { background: #713f12; color: #fbbf24; }
+  .fs-todo { background: #1e1e2e; color: #64748b; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 8px; top: 0; bottom: 0; width: 2px;
+    background: #1e1e2e;
+  }
+  .tl-item { position: relative; margin-bottom: 16px; }
+  .tl-dot {
+    position: absolute; left: -24px; top: 10px;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid #0f0f13; z-index: 1;
+  }
+  .tl-card {
+    border-radius: 10px; padding: 11px 13px;
+    border: 1px solid transparent; font-size: 12px;
+  }
+  .tl-title { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+  .tl-desc { color: #94a3b8; line-height: 1.55; }
+  .tl-time { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; margin-left: 8px; }
+
+  .tl-done .tl-dot { background: #22c55e; }
+  .tl-done .tl-card { background: #0a1f0a; border-color: #166534; }
+  .tl-done .tl-time { background: #14532d; color: #4ade80; }
+
+  .tl-now .tl-dot { background: #f59e0b; }
+  .tl-now .tl-card { background: #1a1500; border-color: #854d0e; }
+  .tl-now .tl-time { background: #713f12; color: #fbbf24; }
+
+  .tl-next .tl-dot { background: #3b82f6; }
+  .tl-next .tl-card { background: #0c1a2e; border-color: #1e3a5f; }
+  .tl-next .tl-time { background: #1e3a5f; color: #60a5fa; }
+
+  .tl-future .tl-dot { background: #2d2d3d; }
+  .tl-future .tl-card { background: #0f0f1a; border-color: #1e1e2e; }
+  .tl-future .tl-time { background: #1e1e2e; color: #475569; }
+
+  /* Demo readiness */
+  .demo-bar { margin-bottom: 8px; }
+  .demo-label { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 12px; }
+  .demo-track { background: #1e1e2e; border-radius: 99px; height: 8px; overflow: hidden; }
+  .demo-fill { height: 100%; border-radius: 99px; transition: width 0.5s; }
+
+  .info-box {
+    background: #0c1a2e; border: 1px solid #1e3a5f;
+    border-radius: 10px; padding: 12px 14px;
+    font-size: 12px; line-height: 1.7; color: #94a3b8;
+    margin-top: 10px;
+  }
+  .info-box strong { color: #e2e8f0; }
+</style>
+</head>
+<body>
+
+<h1>Project Status Report</h1>
+<p class="subtitle">Lucent — where we are, what's left, when it's ready</p>
+<!-- STATUS_SYNC:START -->
+<div class="status-sync">Last updated: 2026-06-24 02:12:09 | Source: briefing run</div>
+<!-- STATUS_SYNC:END -->
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('progress')">What's built</div>
+  <div class="tab inactive" onclick="showTab('files')">Current files</div>
+  <div class="tab inactive" onclick="showTab('timeline')">Timeline to launch</div>
+  <div class="tab inactive" onclick="showTab('demo')">Demo readiness</div>
+</div>
+
+<!-- TAB 1: Progress -->
+<div class="panel active" id="tab-progress">
+
+  <!-- DONE -->
+  <div class="status-card s-done" onclick="toggle('s1')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Core briefing engine</div>
+        <div class="status-sub">Data analysis · AI generation · Scoring · PA tone</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s1">▶</span>
+    </div>
+    <div class="status-body" id="body-s1">
+      <div class="detail-item"><div class="detail-dot"></div><div>Reads tasks, inventory and CRM data from CSV files</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Calculates health scores per area (0–100)</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Sends data to Groq AI (Llama 3.3 70B) for analysis</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Generates warm, PA-style morning briefing under 450 words</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Overall day score with traffic light rating</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Tool suggestions per problem area</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Top 3 priorities for the day</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Completion percentages formatted correctly as 45% not 0.45</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s2')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Delivery layer</div>
+        <div class="status-sub">Notion · Gmail · Outlook · Google Calendar</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s2">▶</span>
+    </div>
+    <div class="status-body" id="body-s2">
+      <div class="detail-item"><div class="detail-dot"></div><div>Creates a new Notion page every morning with full briefing</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Sends formatted email to Gmail inbox</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Sends formatted email to Outlook inbox</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Sends calendar invite as .ics attachment</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Single SMTP connection handles all three emails efficiently</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Timestamped log written to briefing_log.txt after every run</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s3')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Smart update alerts</div>
+        <div class="status-sub">Change detection · Silent unless something changes</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s3">▶</span>
+    </div>
+    <div class="status-body" id="body-s3">
+      <div class="detail-item"><div class="detail-dot"></div><div>Runs throughout the day — 10am, 2pm, 6pm</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Compares current data to morning snapshot</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Silent if nothing changed — no inbox noise</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Fires alert if task status, stock level or lead status changes</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Detects brand new items added during the day</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Urgency levels — urgent, high, medium, low</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>End of day wrap at 6pm with tomorrow's priorities</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Snapshot files auto-cleaned after 3 days</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s4')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Automation</div>
+        <div class="status-sub">Runs itself · No manual input needed</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s4">▶</span>
+    </div>
+    <div class="status-body" id="body-s4">
+      <div class="detail-item"><div class="detail-dot"></div><div>Runs automatically on every Windows login and screen unlock</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Run-once protection — never sends duplicate briefings</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Lock files auto-cleaned after 3 days</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Error logging to briefing_log.txt and update_log.txt</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s5')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Gmail API connector</div>
+        <div class="status-sub">Reads inbox automatically · extracts action items</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s5">▶</span>
+    </div>
+    <div class="status-body" id="body-s5">
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ OAuth authentication set up and working</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ gmail_connector.py integrated into briefing.py and tested</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Gmail inbox activity now contributes to briefing context</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ connector is active in daily production run</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s6')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">PDF reader</div>
+        <div class="status-sub">Drop PDF in folder · tool reads and summarises it</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s6">▶</span>
+    </div>
+    <div class="status-body" id="body-s6">
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ pdf_connector.py integrated into briefing.py</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ inbox_pdfs and processed_pdfs folders are active in flow</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ document summary is included in the generated briefing</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ processed files are moved out automatically after parsing</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s7')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Live news + market intelligence</div>
+        <div class="status-sub">Internet signals · competitor monitoring · trends</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s7">▶</span>
+    </div>
+    <div class="status-body" id="body-s7">
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ free market/news feed chain integrated with graceful fallback</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ profile-aware topics by industry, region, and interests</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ one-click and form-based feedback learning loop</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ premium report now includes digest section + quick feedback links</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s12')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Premium reporting + free CI</div>
+        <div class="status-sub">Executive HTML reports · weekly digest · automated tests</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s12">▶</span>
+    </div>
+    <div class="status-body" id="body-s12">
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ executive_briefing.html generated each run</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ weekly_digest.py produces weekly_digest.html and weekly_digest.json</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Slack and Teams now receive rich card-style payloads with fallback</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ GitHub Actions CI validates syntax and runs all tests on push/PR</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s-memory')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Memory + trend detection</div>
+        <div class="status-sub">Historical comparison · anomaly detection · predictive insights</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s-memory">▶</span>
+    </div>
+    <div class="status-body" id="body-s-memory">
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Loads 14-day historical snapshots for comparison</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Calculates direction + velocity for all key metrics (tasks, leads, stock, pipeline)</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Detects anomalies using statistical outlier detection (z-score)</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Includes trend context in AI briefing prompt for predictive analysis</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Transforms briefing from reactive to forward-looking</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s8')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Slack connector</div>
+        <div class="status-sub">Team conversation intelligence</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s8">▶</span>
+    </div>
+    <div class="status-body" id="body-s8">
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Slack API — free tier OAuth integration</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Monitors designated channels (configurable via slack_channels.json)</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Extracts decisions, action items, unresolved threads</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Team context included in daily briefing prompt</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Setup: set SLACK_BOT_TOKEN and run 'python slack_connector.py setup'</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-todo" onclick="toggle('s9')">
+    <div class="status-header">
+  <div class="status-card s-done" onclick="toggle('s9')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Microsoft 365 connector</div>
+        <div class="status-sub">Outlook · Teams · Calendar · OneDrive</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s9">▶</span>
+    </div>
+    <div class="status-body" id="body-s9">
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Microsoft Graph API — free tier OAuth integration</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Reads recent emails, calendar events, OneDrive files</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Optional Teams channel monitoring</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Enterprise context included in briefing prompt</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Setup: set M365_ACCESS_TOKEN environment variable</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-todo" onclick="toggle('s11')">
+    <div class="status-header">
+      <div class="status-num">○</div>
+      <div>
+        <div class="status-title">Advanced connectors + marketing suite</div>
+        <div class="status-sub">Accounting, HR, CRM APIs · Google Ads, Meta, Analytics</div>
+      </div>
+      <span class="status-badge">📅 Phase 4</span>
+      <span class="chevron" id="chev-s11">▶</span>
+    </div>
+    <div class="status-body" id="body-s11">
+      <div class="detail-item"><div class="detail-dot"></div><div>HR API — employee capacity, PTO data</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Accounting API — P&L, cash flow, reporting</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>CRM API — pipeline, deal flow, forecasting</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>Marketing Intelligence — Google Ads, Meta spend, content suggestions</div></div>
+    </div>
+  </div>
+
+  <div class="status-card s-done" onclick="toggle('s12')">
+    <div class="status-header">
+      <div class="status-num">✓</div>
+      <div>
+        <div class="status-title">Customer dashboard + setup wizard</div>
+        <div class="status-sub">Polished client-facing briefing hub and onboarding flow</div>
+      </div>
+      <span class="status-badge">✅ Complete</span>
+      <span class="chevron" id="chev-s12">▶</span>
+    </div>
+    <div class="status-body" id="body-s12">
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Unified client view for premium briefing, weekly digest, and project status</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Cleaner visual language with hero metrics, cards, and table layouts</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Auto-refreshes from local briefing and digest outputs</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Demo-ready surface for customers and pilots</div></div>
+      <div class="detail-item"><div class="detail-dot"></div><div>✅ Onboarding wizard shows source readiness and launch steps</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TAB 2: Files -->
+<div class="panel" id="tab-files">
+  <p style="color:#64748b; margin-bottom:14px;">Every file currently in your office-briefing folder:</p>
+  <div class="files-grid">
+    <div class="file-card">
+      <div class="file-name">briefing.py</div>
+      <div class="file-desc">Main script. Reads data, generates AI briefing, delivers to all 4 destinations.</div>
+      <span class="file-status fs-done">✅ Complete & audited</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">update.py</div>
+      <div class="file-desc">Change detection. Runs 3x daily. Silent unless data changes. End of day wrap at 6pm.</div>
+      <span class="file-status fs-done">✅ Complete & audited</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">gmail_connector.py</div>
+      <div class="file-desc">Reads Gmail inbox. Extracts emails for AI analysis. Integrated into briefing flow.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">pdf_connector.py</div>
+      <div class="file-desc">Reads PDFs from inbox_pdfs folder. Extracts text and feeds document context into daily briefing.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">news_connector.py</div>
+      <div class="file-desc">News + market intelligence with profile-aware targeting and feedback-based learning.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">premium_report.py</div>
+      <div class="file-desc">Generates executive_briefing.html and includes weekly digest section with one-click feedback links.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">weekly_digest.py</div>
+      <div class="file-desc">Builds weekly trends from local snapshots and writes HTML + JSON digest outputs.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">dashboard.py</div>
+      <div class="file-desc">Generates the customer-facing dashboard that unifies briefing, digest, and status views.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">setup_wizard.py</div>
+      <div class="file-desc">Generates the onboarding wizard that shows source readiness and launch steps.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">client_dashboard.html</div>
+      <div class="file-desc">Generated customer-facing dashboard with briefing, digest, and readiness metrics.</div>
+      <span class="file-status fs-done">✅ Generated</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">client_setup_wizard.html</div>
+      <div class="file-desc">Generated setup wizard for onboarding and source readiness checks.</div>
+      <span class="file-status fs-done">✅ Generated</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">landing_page.html</div>
+      <div class="file-desc">Public-facing landing page with product story, CTA buttons, and first impression polish.</div>
+      <span class="file-status fs-done">✅ Generated</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">design_system.py</div>
+      <div class="file-desc">Core design tokens and reusable UI component styles for consistent visual identity.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">design_system_preview.html</div>
+      <div class="file-desc">Live design system showcase page for typography, colors, buttons, cards, and forms.</div>
+      <span class="file-status fs-done">✅ Generated</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">.github/workflows/ci.yml</div>
+      <div class="file-desc">Free CI workflow running py_compile and unittest on pushes and pull requests.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">run_briefing.bat</div>
+      <div class="file-desc">Launcher file. Activates venv and runs briefing.py automatically.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">run_update.bat</div>
+      <div class="file-desc">Launcher file. Activates venv and runs update.py automatically.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">.env</div>
+      <div class="file-desc">All API keys stored securely. Groq, Notion, Gmail SMTP, Outlook, Calendar.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">credentials.json</div>
+      <div class="file-desc">Gmail OAuth credentials from Google Cloud Console.</div>
+      <span class="file-status fs-done">✅ In place</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">gmail_token.json</div>
+      <div class="file-desc">Saved Gmail authentication token. No browser login needed again.</div>
+      <span class="file-status fs-done">✅ Generated</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">tasks.csv</div>
+      <div class="file-desc">Task tracker data. Replace with real data when deploying for a client.</div>
+      <span class="file-status fs-done">✅ Sample data</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">inventory.csv</div>
+      <div class="file-desc">Inventory data. Replace with real data when deploying for a client.</div>
+      <span class="file-status fs-done">✅ Sample data</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">crm.csv</div>
+      <div class="file-desc">CRM and leads data. Replace with real data when deploying for a client.</div>
+      <span class="file-status fs-done">✅ Sample data</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">requirements.txt</div>
+      <div class="file-desc">All Python dependencies listed. One command installs everything.</div>
+      <span class="file-status fs-done">✅ Complete</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">inbox_pdfs/</div>
+      <div class="file-desc">Drop PDFs here. Tool reads them automatically at next briefing run.</div>
+      <span class="file-status fs-done">✅ Folder ready</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">processed_pdfs/</div>
+      <div class="file-desc">PDFs moved here after processing. Keeps inbox clean.</div>
+      <span class="file-status fs-done">✅ Folder ready</span>
+    </div>
+    <div class="file-card">
+      <div class="file-name">briefing_log.txt</div>
+      <div class="file-desc">Timestamped log of every briefing run. Check here if something goes wrong.</div>
+      <span class="file-status fs-done">✅ Auto-generated</span>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: Timeline -->
+<div class="panel" id="tab-timeline">
+
+  <div class="info-box" style="margin-bottom:14px; background:#111827; border-color:#1f2a3d; color:#cbd5e1;">
+    <strong>Roadmap at a glance</strong>
+    <ul style="margin:10px 0 0 18px; line-height:1.8;">
+      <li>Quick Response AI for email and chat with draft-only, approval-required, and safe auto-send modes.</li>
+      <li>Unified action register that pulls tasks out of email, Slack, Teams, PDFs, and meetings.</li>
+      <li>Follow-up autopilot, VIP routing, commitment tracking, and escalation rules for daily office execution.</li>
+      <li>Meeting-to-execution pipeline with owners, due dates, reminders, and role-based priorities.</li>
+      <li>Revenue and risk cockpit with CRM next-best-action, pipeline risk, customer health, and inventory alerts.</li>
+      <li>Enterprise hardening with audit trail, explainability, role permissions, and safe automation controls.</li>
+      <li>Launch tooling with onboarding analytics, pricing tiers, and trial-to-paid conversion, while keeping free-tier access.</li>
+    </ul>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Sessions 1–5 — Foundation <span class="tl-time">✅ Done</span></div>
+        <div class="tl-desc">Environment, data reader, AI briefing, delivery layer, automation, audit and bug fixes. The core system works and runs itself every morning.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Session 6 — Gmail + PDF <span class="tl-time">✅ Done</span></div>
+        <div class="tl-desc">Both connectors are integrated into briefing.py and contributing to daily outputs.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Session 7 — Live news + market data <span class="tl-time">✅ Done</span></div>
+        <div class="tl-desc">Live feeds, profile-aware personalization, and feedback learning are now active in production runs.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">🎯 Demo-ready milestone reached <span class="tl-time">✅ Reached</span></div>
+        <div class="tl-desc">System now reads emails/documents, monitors market/news, adapts to user profile, and delivers premium briefing outputs with weekly digest support.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Session 7 — Memory + trend detection ✅ <span class="tl-time">Complete</span></div>
+        <div class="tl-desc">Historical comparison · anomaly detection · predictive insights. Briefing now anticipates problems before they happen.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Session 8 — Slack connector ✅ <span class="tl-time">Complete</span></div>
+        <div class="tl-desc">Free tier OAuth · monitors designated channels · extracts decisions, action items, threads · included in briefing prompt.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Session 9 — Microsoft 365 connector ✅ <span class="tl-time">Complete</span></div>
+        <div class="tl-desc">Free tier Graph API · Outlook, Teams, Calendar, OneDrive · Doubles addressable market for enterprise.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-future">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Sessions 10–11 — Office action engine <span class="tl-time">~2 months</span></div>
+        <div class="tl-desc">Unified action register, AI quick-reply drafting for email/chat, approval-required send mode, follow-up autopilot, VIP routing, and commitment tracking. All free-tier friendly and designed for daily office execution.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-future">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Sessions 11–12 — Meeting-to-execution layer <span class="tl-time">~2.5 months</span></div>
+        <div class="tl-desc">Turns meeting notes, emails, and chat threads into owners, due dates, reminders, and escalation rules. Includes a commitment tracker and daily role-based priorities.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Session 10 — Customer dashboard ✅ <span class="tl-time">Complete</span></div>
+        <div class="tl-desc">Unified client view for premium briefing, weekly digest, and status tracking. The product now looks like a finished platform, not a pile of scripts.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Session 11 — Landing page ✅ <span class="tl-time">Complete</span></div>
+        <div class="tl-desc">Public-facing first impression with product story, CTA buttons, and a clean free-tier launch message.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-done">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Session 12 — Design system foundation ✅ <span class="tl-time">Complete</span></div>
+        <div class="tl-desc">Established reusable design tokens, components, and preview gallery for consistent product aesthetics.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-future">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Sessions 12–13 — Revenue and risk cockpit <span class="tl-time">~3 months</span></div>
+        <div class="tl-desc">CRM next-best-action, pipeline risk radar, customer health scoring, supplier and inventory alerts, and approval flows for budgets, discounts, and purchase orders.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-future">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Sessions 13–14 — Enterprise hardening <span class="tl-time">~3.5 months</span></div>
+        <div class="tl-desc">Role-based access, audit trail, explainability, safe auto-send rules, data retention controls, and customer-specific workspace branding.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-future">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-title">Sessions 14–15 — Launch and conversion tools <span class="tl-time">~4 months</span></div>
+        <div class="tl-desc">Client login, onboarding analytics, pricing tiers, trial-to-paid conversion flows, and in-product upgrade prompts, while keeping the free starter path intact.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TAB 4: Demo readiness -->
+<div class="panel" id="tab-demo">
+
+  <p style="color:#64748b; margin-bottom:16px; font-size:12px;">How ready is the product to show or sell right now:</p>
+
+  <div class="demo-bar">
+    <div class="demo-label"><span>Core briefing engine</span><span style="color:#4ade80;">100%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:100%; background:#22c55e;"></div></div>
+  </div>
+
+  <div class="demo-bar" style="margin-top:10px;">
+    <div class="demo-label"><span>Delivery (Notion, Gmail, Outlook, Calendar)</span><span style="color:#4ade80;">100%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:100%; background:#22c55e;"></div></div>
+  </div>
+
+  <div class="demo-bar" style="margin-top:10px;">
+    <div class="demo-label"><span>Automation (runs itself daily)</span><span style="color:#4ade80;">100%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:100%; background:#22c55e;"></div></div>
+  </div>
+
+  <div class="demo-bar" style="margin-top:10px;">
+    <div class="demo-label"><span>Smart update alerts + end of day wrap</span><span style="color:#4ade80;">100%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:100%; background:#22c55e;"></div></div>
+  </div>
+
+  <div class="demo-bar" style="margin-top:10px;">
+    <div class="demo-label"><span>Gmail connector</span><span style="color:#4ade80;">100%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:100%; background:#22c55e;"></div></div>
+  </div>
+
+  <div class="demo-bar" style="margin-top:10px;">
+    <div class="demo-label"><span>PDF reader</span><span style="color:#4ade80;">100%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:100%; background:#22c55e;"></div></div>
+  </div>
+
+  <div class="demo-bar" style="margin-top:10px;">
+    <div class="demo-label"><span>Live news + market intelligence</span><span style="color:#4ade80;">100%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:100%; background:#22c55e;"></div></div>
+  </div>
+
+  <div class="demo-bar" style="margin-top:10px;">
+    <div class="demo-label"><span>Slack/Teams rich delivery</span><span style="color:#4ade80;">100%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:100%; background:#22c55e;"></div></div>
+  </div>
+
+  <div class="demo-bar" style="margin-top:10px;">
+    <div class="demo-label"><span>Weekly executive digest + CI</span><span style="color:#4ade80;">100%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:100%; background:#22c55e;"></div></div>
+  </div>
+
+  <div class="demo-bar" style="margin-top:10px;">
+    <div class="demo-label"><span>Web dashboard</span><span style="color:#475569;">0%</span></div>
+    <div class="demo-track"><div class="demo-fill" style="width:0%; background:#3b82f6;"></div></div>
+  </div>
+
+  <div class="info-box" style="margin-top:16px;">
+    <strong>Can you demo it right now?</strong> Yes — with sample data. The briefing runs, scores update, emails arrive, Notion page creates, alerts fire. Anyone who sees it immediately understands the value.<br><br>
+    <strong>Can you charge for it right now?</strong> Yes — for an early access or beta price. You'd set it up on their computer, connect their CSV files, and it runs for them automatically. No web dashboard needed yet.<br><br>
+    <strong>When is it fully sellable at full price?</strong> The current version is already demo-and-sale ready for premium pilot offers, with daily executive report output, adaptive market/news intelligence, and a weekly digest layer.
+  </div>
+
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.classList.add('inactive'); });
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.remove('inactive');
+    event.target.classList.add('active');
+  }
+
+  function toggle(id) {
+    const body = document.getElementById('body-' + id);
+    const chev = document.getElementById('chev-' + id);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    chev.classList.toggle('open', !isOpen);
+  }
+</script>
+</body>
+</html>

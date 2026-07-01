@@ -1,0 +1,4 @@
+SKU,Product_Name,Category,Unit_Price,Stock_Level,Reorder_Point,Supplier,Last_Restock,Discontinued
+WGT-10,Steel Widget,Hardware,15.50,120,50,Acme Corp,2023-12-15,FALSE
+SLV-05,Chrome Sleeve,Hardware,8.00,45,60,Global Parts,2023-11-20,FALSE
+PLT-22,Plastic Cap,Accessories,2.25,300,100,Acme Corp,2024-01-02,TRUE

@@ -1,0 +1,12 @@
+{
+  "topics": {
+    "property market": 1,
+    "mortgage rates": 1,
+    "\u0015.venv\\scripts\\python.exe -c \"import pandas as pd; from action_register import load_action_register; from follow_up import load_follow_up_plan; from meeting_pipeline import load_meeting_execution_plan; from pipeline_risk import write_pipeline_risk_report; crm = pd.read_csv('crm.csv'); write_pipeline_risk_report(crm_df=crm": 1,
+    "action_register=load_action_register()": 1,
+    "follow_up_plan=load_follow_up_plan()": 1,
+    "meeting_execution_plan=load_meeting_execution_plan())\"": 1,
+    "general business": 1
+  },
+  "last_source": "briefing"
+}

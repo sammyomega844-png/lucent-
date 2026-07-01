@@ -1,0 +1,4 @@
+Task_ID,Task_Name,Category,Status,Priority,Assignee,Start_Date,Due_Date,Completion_%,Notes
+TSK-001,Market Research,Strategy,Completed,High,Alice,2024-01-01,2024-01-10,1.00,Focus on EMEA
+TSK-002,UI Wireframes,Design,In Progress,Medium,Bob,2024-01-05,2024-01-15,0.45,Using Figma
+TSK-003,Database Setup,Backend,In Progress,High,Charlie,2024-01-12,2024-01-20,0.30,Use PostgreSQL

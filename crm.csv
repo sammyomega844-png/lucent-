@@ -1,0 +1,4 @@
+Lead_ID,Lead_Name,Email,Company,Source,Status,Lead_Value,Created_At,Last_Contact
+L-992,John Doe,j.doe@email.com,TechInc,LinkedIn,Qualified,5000,2024-01-05,2024-01-08
+L-993,Sara Smith,sara@web.org,WebSoft,Referral,Contacted,2500,2024-01-06,2024-01-07
+L-994,Mike Ross,m.ross@firm.com,Ross Law,Cold Call,Lost,0,2024-01-07,2024-01-10

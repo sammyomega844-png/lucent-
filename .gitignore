@@ -1,0 +1,49 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+
+# Local secrets and tokens
+.env
+credentials.json
+gmail_token.json
+m365_config.json
+slack_channels.json
+
+# Runtime logs and transient locks
+*_log.txt
+ran_today_*.lock
+
+# Generated local artifacts
+client_dashboard.html
+client_setup_wizard.html
+client_setup_wizard.json
+design_system_preview.html
+executive_briefing.html
+landing_page.html
+weekly_digest.html
+weekly_digest.json
+snapshot_*.json
+response_drafts.json
+response_audit_log.jsonl
+action_register.json
+follow_up_plan.json
+meeting_execution_plan.json
+customer_health_report.json
+pipeline_risk_report.json
+approval_workflow.json
+kpi_digest_report.json
+communication_timeline.json
+recommendations.json
+slack_approval_log.jsonl
+client_help_center.html
+revenue_forecast.json
+deal_progression.json
+renewal_reminders.json
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
