@@ -29,7 +29,12 @@ jobs:
         run: npm run build
 
       - name: Deploy to Netlify
-        run: npx netlify-cli deploy --dir frontend-lovable/.output/public --prod --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN"
+        run: |
+          if [ -z "$NETLIFY_SITE_ID" ] || [ -z "$NETLIFY_AUTH_TOKEN" ]; then
+            echo "::error::NETLIFY_SITE_ID and NETLIFY_AUTH_TOKEN secrets must be configured in repository settings before deploying."
+            exit 1
+          fi
+          npx netlify-cli deploy --dir frontend-lovable/.output/public --prod --no-build --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
