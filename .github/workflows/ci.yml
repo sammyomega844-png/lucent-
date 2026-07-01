@@ -46,7 +46,7 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: frontend-lovable
-        run: npm ci
+        run: npm ci --include=dev
 
       - name: Frontend lint
         working-directory: frontend-lovable
