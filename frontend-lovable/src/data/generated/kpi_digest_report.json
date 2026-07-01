@@ -1,0 +1,97 @@
+{
+  "generated_at": "2026-07-01T04:03:53.365560+00:00",
+  "summary": "KPI digest: 5 day(s) of data; 2 KPI(s) declining \u2014 review flags; pipeline $7,500, 1 qualified, 0 overdue task(s).",
+  "kpis": {
+    "completed_tasks": {
+      "latest": 1,
+      "avg": 1.0,
+      "trend": "stable"
+    },
+    "high_priority_open": {
+      "latest": 1,
+      "avg": 0.8,
+      "trend": "declining"
+    },
+    "overdue_tasks": {
+      "latest": 0,
+      "avg": 0.0,
+      "trend": "stable"
+    },
+    "stock_alerts": {
+      "latest": 1,
+      "avg": 0.8,
+      "trend": "declining"
+    },
+    "qualified_leads": {
+      "latest": 1,
+      "avg": 1.0,
+      "trend": "stable"
+    },
+    "pipeline_value": {
+      "latest": 7500.0,
+      "avg": 7500.0,
+      "trend": "stable"
+    },
+    "lost_deals": {
+      "latest": 1,
+      "avg": 1.0,
+      "trend": "stable"
+    }
+  },
+  "rows": [
+    {
+      "completed_tasks": 1,
+      "high_priority_open": 0,
+      "overdue_tasks": 0,
+      "stock_alerts": 0,
+      "qualified_leads": 1,
+      "pipeline_value": 7500.0,
+      "lost_deals": 1,
+      "date": "2026-06-17"
+    },
+    {
+      "completed_tasks": 1,
+      "high_priority_open": 1,
+      "overdue_tasks": 0,
+      "stock_alerts": 1,
+      "qualified_leads": 1,
+      "pipeline_value": 7500.0,
+      "lost_deals": 1,
+      "date": "2026-06-22"
+    },
+    {
+      "completed_tasks": 1,
+      "high_priority_open": 1,
+      "overdue_tasks": 0,
+      "stock_alerts": 1,
+      "qualified_leads": 1,
+      "pipeline_value": 7500.0,
+      "lost_deals": 1,
+      "date": "2026-06-23"
+    },
+    {
+      "completed_tasks": 1,
+      "high_priority_open": 1,
+      "overdue_tasks": 0,
+      "stock_alerts": 1,
+      "qualified_leads": 1,
+      "pipeline_value": 7500.0,
+      "lost_deals": 1,
+      "date": "2026-06-26"
+    },
+    {
+      "completed_tasks": 1,
+      "high_priority_open": 1,
+      "overdue_tasks": 0,
+      "stock_alerts": 1,
+      "qualified_leads": 1,
+      "pipeline_value": 7500.0,
+      "lost_deals": 1,
+      "date": "2026-06-30"
+    }
+  ],
+  "flags": [
+    "high priority open is declining (latest 1, avg 0.8)",
+    "stock alerts is declining (latest 1, avg 0.8)"
+  ]
+}

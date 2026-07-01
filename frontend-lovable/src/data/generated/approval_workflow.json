@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-07-01T04:03:53.243872+00:00",
+  "summary": "Approval workflow: no pending drafts.",
+  "counts": {
+    "total_pending": 0,
+    "total_approved": 0,
+    "total_rejected": 0,
+    "total_sent": 0,
+    "showing": 0
+  },
+  "items": []
+}

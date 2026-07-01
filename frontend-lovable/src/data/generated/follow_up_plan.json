@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-07-01T04:03:52.989129+00:00",
+  "counts": {
+    "total": 4,
+    "tasks": 4,
+    "reply_drafts": 0,
+    "email_slack": 0
+  },
+  "summary": "Follow-up autopilot: 4 item(s) ready; 0 approval draft(s), 4 overdue task(s), 0 inbox/chat follow-up(s).",
+  "items": [
+    {
+      "source": "task",
+      "title": "UI Wireframes",
+      "owner": "Bob",
+      "due_date": "2024-01-15",
+      "priority": "Medium",
+      "score": 80,
+      "reason": "overdue by 898 day(s)",
+      "nudge_subject": "Follow up: UI Wireframes",
+      "nudge_body": "Hi Bob, just following up on UI Wireframes. It was due on 2024-01-15 and is now 898 day(s) overdue. Please send a quick status update or confirm the new deadline."
+    },
+    {
+      "source": "task",
+      "title": "Database Setup",
+      "owner": "Charlie",
+      "due_date": "2024-01-20",
+      "priority": "High",
+      "score": 80,
+      "reason": "overdue by 893 day(s)",
+      "nudge_subject": "Follow up: Database Setup",
+      "nudge_body": "Hi Charlie, just following up on Database Setup. It was due on 2024-01-20 and is now 893 day(s) overdue. Please send a quick status update or confirm the new deadline."
+    },
+    {
+      "source": "task_followup",
+      "title": "Database Setup",
+      "owner": "Charlie",
+      "due_date": "2024-01-20",
+      "priority": "High",
+      "score": 70,
+      "reason": "high priority, due 2024-01-20, in progress",
+      "nudge_subject": "Follow up: Database Setup",
+      "nudge_body": "Hi Charlie, checking in on Database Setup. It is still active in the action register because it needs attention. Please share a status update or next step."
+    },
+    {
+      "source": "task_followup",
+      "title": "UI Wireframes",
+      "owner": "Bob",
+      "due_date": "2024-01-15",
+      "priority": "Medium",
+      "score": 70,
+      "reason": "due 2024-01-15, in progress",
+      "nudge_subject": "Follow up: UI Wireframes",
+      "nudge_body": "Hi Bob, checking in on UI Wireframes. It is still active in the action register because it needs attention. Please share a status update or next step."
+    }
+  ]
+}

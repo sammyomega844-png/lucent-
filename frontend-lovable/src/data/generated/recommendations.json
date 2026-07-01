@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-07-01T04:03:53.413155+00:00",
+  "summary": "Recommendations: 7 action(s) suggested; 3 high-priority, 4 medium-priority. Top: Prioritise: Database Setup.",
+  "counts": {
+    "total": 7,
+    "high": 3,
+    "medium": 4
+  },
+  "items": [
+    {
+      "category": "action",
+      "title": "Prioritise: Database Setup",
+      "rationale": "This item has a score of 90/100 in the action register.",
+      "action": "Assign to Charlie and set a deadline today.",
+      "priority": "high"
+    },
+    {
+      "category": "crm",
+      "title": "Re-engage Ross Law before it goes cold",
+      "rationale": "This account scored 23/100 \u2014 risk bucket, Lost, contacted 903 day(s) ago, 0 related open item(s).",
+      "action": "Send a personal touchpoint email and update the CRM last contact date.",
+      "priority": "high"
+    },
+    {
+      "category": "pipeline",
+      "title": "Escalate TechInc \u2014 deal is slipping",
+      "rationale": "This deal ($5,000) has a pipeline risk score of 99/100 (Qualified, touched 905 day(s) ago, 0 related open item(s)).",
+      "action": "Reset the close plan, confirm stakeholder availability, and set a hard next-step date.",
+      "priority": "high"
+    },
+    {
+      "category": "crm",
+      "title": "Expand TechInc while momentum is high",
+      "rationale": "This account scored 82/100 \u2014 strong engagement, qualified status.",
+      "action": "Propose an upsell or referral conversation while the relationship is warm.",
+      "priority": "medium"
+    },
+    {
+      "category": "pipeline",
+      "title": "$7,500 in pipeline needs attention this week",
+      "rationale": "2 deals are in risk or watch \u2014 combined value at risk.",
+      "action": "Block time for a pipeline review; advance or close each deal this week.",
+      "priority": "medium"
+    },
+    {
+      "category": "kpi",
+      "title": "KPI regression: high priority open is declining (latest 1, avg 0.8)",
+      "rationale": "A key metric is trending in the wrong direction over the past two weeks.",
+      "action": "Investigate the root cause and add a corrective action to this week's priorities.",
+      "priority": "medium"
+    },
+    {
+      "category": "kpi",
+      "title": "KPI regression: stock alerts is declining (latest 1, avg 0.8)",
+      "rationale": "A key metric is trending in the wrong direction over the past two weeks.",
+      "action": "Investigate the root cause and add a corrective action to this week's priorities.",
+      "priority": "medium"
+    }
+  ]
+}

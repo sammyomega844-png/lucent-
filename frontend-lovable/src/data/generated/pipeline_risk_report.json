@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-07-01T04:03:53.140838+00:00",
+  "summary": "Pipeline risk radar: 2 active deal(s) scored; 2 at risk; 0 watch; 0 stable; top risk TechInc (99/100); highest value TechInc ($5,000).",
+  "counts": {
+    "total": 2,
+    "risk": 2,
+    "watch": 0,
+    "stable": 0,
+    "closed_lost": 1
+  },
+  "items": [
+    {
+      "source": "crm",
+      "company": "TechInc",
+      "lead_name": "John Doe",
+      "status": "Qualified",
+      "lead_value": 5000.0,
+      "score": 99,
+      "bucket": "risk",
+      "reason": "Qualified, touched 905 day(s) ago, 0 related open item(s)",
+      "next_step": "Escalate now and reset the close plan.",
+      "related_open_items": 0
+    },
+    {
+      "source": "crm",
+      "company": "WebSoft",
+      "lead_name": "Sara Smith",
+      "status": "Contacted",
+      "lead_value": 2500.0,
+      "score": 87,
+      "bucket": "risk",
+      "reason": "Contacted, touched 906 day(s) ago, 0 related open item(s)",
+      "next_step": "Escalate now and reset the close plan.",
+      "related_open_items": 0
+    }
+  ]
+}

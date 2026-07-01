@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-07-01T04:03:53.015309+00:00",
+  "counts": {
+    "total": 2,
+    "meeting_notes": 0,
+    "action_register": 2,
+    "follow_up": 0
+  },
+  "summary": "Meeting-to-execution: 2 item(s) ready; 0 from notes, 2 from the action register, 0 from follow-up autopilot.",
+  "items": [
+    {
+      "source": "task_meeting",
+      "title": "UI Wireframes",
+      "owner": "Bob",
+      "due_date": "2024-01-15",
+      "priority": "Medium",
+      "score": 90,
+      "reason": "overdue by 898 day(s)",
+      "next_step": "Turn this into a concrete action with an owner and deadline."
+    },
+    {
+      "source": "task_meeting",
+      "title": "Database Setup",
+      "owner": "Charlie",
+      "due_date": "2024-01-20",
+      "priority": "High",
+      "score": 90,
+      "reason": "overdue by 893 day(s)",
+      "next_step": "Turn this into a concrete action with an owner and deadline."
+    }
+  ]
+}

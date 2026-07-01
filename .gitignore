@@ -43,6 +43,10 @@ revenue_forecast.json
 deal_progression.json
 renewal_reminders.json
 
+# Keep committed frontend fallback data for CI/Netlify builds
+!frontend-lovable/src/data/generated/
+!frontend-lovable/src/data/generated/*.json
+
 # OS/editor
 .DS_Store
 Thumbs.db

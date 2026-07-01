@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-07-01T04:03:53.071811+00:00",
+  "summary": "Customer health radar: 3 lead(s) scored; 1 healthy; 1 watch; 1 at risk; top risk Ross Law (23/100); top opportunity TechInc (82/100).",
+  "counts": {
+    "total": 3,
+    "healthy": 1,
+    "watch": 1,
+    "risk": 1
+  },
+  "items": [
+    {
+      "source": "crm",
+      "company": "TechInc",
+      "lead_name": "John Doe",
+      "status": "Qualified",
+      "lead_value": 5000.0,
+      "score": 82,
+      "bucket": "healthy",
+      "reason": "Qualified, contacted 905 day(s) ago, 0 related open item(s)",
+      "next_step": "Keep cadence and expand the account.",
+      "related_open_items": 0
+    },
+    {
+      "source": "crm",
+      "company": "WebSoft",
+      "lead_name": "Sara Smith",
+      "status": "Contacted",
+      "lead_value": 2500.0,
+      "score": 68,
+      "bucket": "watch",
+      "reason": "Contacted, contacted 906 day(s) ago, 0 related open item(s)",
+      "next_step": "Send a follow-up and confirm next milestone.",
+      "related_open_items": 0
+    },
+    {
+      "source": "crm",
+      "company": "Ross Law",
+      "lead_name": "Mike Ross",
+      "status": "Lost",
+      "lead_value": 0.0,
+      "score": 23,
+      "bucket": "risk",
+      "reason": "Lost, contacted 903 day(s) ago, 0 related open item(s)",
+      "next_step": "Escalate and re-engage before the lead stalls.",
+      "related_open_items": 0
+    }
+  ]
+}

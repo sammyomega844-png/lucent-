@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-07-01T04:03:53.399501+00:00",
+  "summary": "Communication timeline: 3 account(s); 2 active; 3 total touches recorded.",
+  "accounts": {
+    "TechInc": {
+      "lead_name": "John Doe",
+      "status": "Qualified",
+      "lead_value": 5000.0,
+      "last_contact": "2024-01-08",
+      "touch_count": 1,
+      "touches": [
+        {
+          "source": "crm",
+          "date": "2024-01-08",
+          "summary": "CRM record \u2014 status: Qualified, value: $5000",
+          "type": "crm"
+        }
+      ]
+    },
+    "WebSoft": {
+      "lead_name": "Sara Smith",
+      "status": "Contacted",
+      "lead_value": 2500.0,
+      "last_contact": "2024-01-07",
+      "touch_count": 1,
+      "touches": [
+        {
+          "source": "crm",
+          "date": "2024-01-07",
+          "summary": "CRM record \u2014 status: Contacted, value: $2500",
+          "type": "crm"
+        }
+      ]
+    },
+    "Ross Law": {
+      "lead_name": "Mike Ross",
+      "status": "Lost",
+      "lead_value": 0.0,
+      "last_contact": "2024-01-10",
+      "touch_count": 1,
+      "touches": [
+        {
+          "source": "crm",
+          "date": "2024-01-10",
+          "summary": "CRM record \u2014 status: Lost, value: $0",
+          "type": "crm"
+        }
+      ]
+    }
+  }
+}

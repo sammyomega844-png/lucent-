@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-06-23T13:35:32.866697",
+  "days": [
+    {
+      "completed": 1,
+      "high_open": 0,
+      "stock_alerts": 0,
+      "qualified": 1,
+      "pipeline_value": 7500.0,
+      "date": "2026-06-17"
+    },
+    {
+      "completed": 1,
+      "high_open": 1,
+      "stock_alerts": 1,
+      "qualified": 1,
+      "pipeline_value": 7500.0,
+      "date": "2026-06-22"
+    },
+    {
+      "completed": 1,
+      "high_open": 1,
+      "stock_alerts": 1,
+      "qualified": 1,
+      "pipeline_value": 7500.0,
+      "date": "2026-06-23"
+    }
+  ],
+  "summary": {
+    "avg_completed": 1.0,
+    "avg_high_open": 0.7,
+    "avg_stock_alerts": 0.7,
+    "avg_qualified": 1.0,
+    "avg_pipeline_value": 7500.0
+  }
+}

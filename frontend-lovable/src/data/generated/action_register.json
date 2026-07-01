@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-07-01T04:03:52.948773+00:00",
+  "counts": {
+    "total": 2,
+    "tasks": 2,
+    "emails": 0,
+    "slack": 0,
+    "reply_drafts": 0
+  },
+  "summary": "Unified action register: 2 item(s) total; 0 reply draft(s), 2 task(s), 0 email(s), 0 Slack item(s).",
+  "items": [
+    {
+      "source": "task",
+      "title": "Database Setup",
+      "owner": "Charlie",
+      "due_date": "2024-01-20",
+      "priority": "High",
+      "score": 90,
+      "reason": "high priority, due 2024-01-20, in progress"
+    },
+    {
+      "source": "task",
+      "title": "UI Wireframes",
+      "owner": "Bob",
+      "due_date": "2024-01-15",
+      "priority": "Medium",
+      "score": 75,
+      "reason": "due 2024-01-15, in progress"
+    }
+  ]
+}
