@@ -28,6 +28,29 @@ jobs:
         working-directory: frontend-lovable
         run: npm run build
 
+      - name: Validate Netlify credentials and site
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          if [ -z "$NETLIFY_AUTH_TOKEN" ] || [ -z "$NETLIFY_SITE_ID" ]; then
+            echo "::error::NETLIFY_AUTH_TOKEN or NETLIFY_SITE_ID is missing."
+            exit 1
+          fi
+
+          echo "NETLIFY_SITE_ID length: ${#NETLIFY_SITE_ID}"
+
+          status_code="$(curl -s -o netlify_site_response.json -w "%{http_code}" \
+            -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" \
+            "https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID")"
+
+          if [ "$status_code" != "200" ]; then
+            echo "::error::Netlify site lookup failed (HTTP $status_code)."
+            echo "::error::Check that NETLIFY_SITE_ID is the exact Site ID and NETLIFY_AUTH_TOKEN belongs to the same Netlify account/team."
+            cat netlify_site_response.json
+            exit 1
+          fi
+
       - name: Deploy to Netlify
         run: npx netlify-cli deploy --dir frontend-lovable/.output/public --prod --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN"
         env:
