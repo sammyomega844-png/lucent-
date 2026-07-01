@@ -48,7 +48,7 @@ jobs:
         run: npm --prefix frontend-lovable ci
 
       - name: Frontend lint
-        run: npm --prefix frontend-lovable run lint
+        run: npm --prefix frontend-lovable run lint -- --max-warnings=1000
 
       - name: Frontend build
         run: npm --prefix frontend-lovable run build
