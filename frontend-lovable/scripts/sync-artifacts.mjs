@@ -58,6 +58,7 @@ if (missing.length) {
 }
 
 if (!copied.length) {
-  console.error("[sync-artifacts] No artifacts were copied.");
-  process.exit(1);
+  console.warn(
+    "[sync-artifacts] No artifacts were copied; using existing generated data if available.",
+  );
 }
