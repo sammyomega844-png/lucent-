@@ -6,7 +6,7 @@ import { N as useRouter, c as HeadContent, d as createRouter, f as Outlet, g as 
 import { n as DashboardLayoutProvider } from "./DashboardLayoutContext-ClhCll-G.mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-CzVbbfbF.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-Cw53B-g0.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var styles_default = "/assets/styles-DMhu10CI.css";
@@ -150,7 +150,7 @@ function RootComponent() {
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(IndustryProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DashboardLayoutProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {}) }) })
 	});
 }
-var $$splitComponentImporter$3 = () => import("./status-DX30KmUy.mjs");
+var $$splitComponentImporter$3 = () => import("./status-D99zPxGV.mjs");
 var Route$3 = createFileRoute("/status")({
 	head: () => ({ meta: [{ title: "Lucent Status" }, {
 		name: "description",
@@ -196,7 +196,7 @@ var Route$1 = createFileRoute("/help")({
 	] }),
 	component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-var $$splitComponentImporter = () => import("./routes-kpjF5gKl.mjs");
+var $$splitComponentImporter = () => import("./routes-BUidM-cZ.mjs");
 var Route = createFileRoute("/")({
 	head: () => ({ meta: [
 		{ title: "Lucent — Executive Intelligence Platform" },

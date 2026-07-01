@@ -1,6 +1,6 @@
-//#region node_modules/.nitro/vite/services/ssr/assets/mock-PXzSbStU.js
+//#region node_modules/.nitro/vite/services/ssr/assets/mock-B6rfRqWa.js
 var action_register_default = {
-	generated_at: "2026-06-29T08:07:03.638411+00:00",
+	generated_at: "2026-07-01T04:03:52.948773+00:00",
 	counts: {
 		"total": 2,
 		"tasks": 2,
@@ -28,7 +28,7 @@ var action_register_default = {
 	}]
 };
 var follow_up_plan_default = {
-	generated_at: "2026-06-29T08:07:03.641115+00:00",
+	generated_at: "2026-07-01T04:03:52.989129+00:00",
 	counts: {
 		"total": 4,
 		"tasks": 4,
@@ -44,9 +44,9 @@ var follow_up_plan_default = {
 			"due_date": "2024-01-15",
 			"priority": "Medium",
 			"score": 80,
-			"reason": "overdue by 896 day(s)",
+			"reason": "overdue by 898 day(s)",
 			"nudge_subject": "Follow up: UI Wireframes",
-			"nudge_body": "Hi Bob, just following up on UI Wireframes. It was due on 2024-01-15 and is now 896 day(s) overdue. Please send a quick status update or confirm the new deadline."
+			"nudge_body": "Hi Bob, just following up on UI Wireframes. It was due on 2024-01-15 and is now 898 day(s) overdue. Please send a quick status update or confirm the new deadline."
 		},
 		{
 			"source": "task",
@@ -55,9 +55,9 @@ var follow_up_plan_default = {
 			"due_date": "2024-01-20",
 			"priority": "High",
 			"score": 80,
-			"reason": "overdue by 891 day(s)",
+			"reason": "overdue by 893 day(s)",
 			"nudge_subject": "Follow up: Database Setup",
-			"nudge_body": "Hi Charlie, just following up on Database Setup. It was due on 2024-01-20 and is now 891 day(s) overdue. Please send a quick status update or confirm the new deadline."
+			"nudge_body": "Hi Charlie, just following up on Database Setup. It was due on 2024-01-20 and is now 893 day(s) overdue. Please send a quick status update or confirm the new deadline."
 		},
 		{
 			"source": "task_followup",
@@ -84,7 +84,7 @@ var follow_up_plan_default = {
 	]
 };
 var meeting_execution_plan_default = {
-	generated_at: "2026-06-29T08:07:03.642421+00:00",
+	generated_at: "2026-07-01T04:03:53.015309+00:00",
 	counts: {
 		"total": 2,
 		"meeting_notes": 0,
@@ -99,7 +99,7 @@ var meeting_execution_plan_default = {
 		"due_date": "2024-01-15",
 		"priority": "Medium",
 		"score": 90,
-		"reason": "overdue by 896 day(s)",
+		"reason": "overdue by 898 day(s)",
 		"next_step": "Turn this into a concrete action with an owner and deadline."
 	}, {
 		"source": "task_meeting",
@@ -108,12 +108,12 @@ var meeting_execution_plan_default = {
 		"due_date": "2024-01-20",
 		"priority": "High",
 		"score": 90,
-		"reason": "overdue by 891 day(s)",
+		"reason": "overdue by 893 day(s)",
 		"next_step": "Turn this into a concrete action with an owner and deadline."
 	}]
 };
 var customer_health_report_default = {
-	generated_at: "2026-06-29T08:07:03.672351+00:00",
+	generated_at: "2026-07-01T04:03:53.071811+00:00",
 	summary: "Customer health radar: 3 lead(s) scored; 1 healthy; 1 watch; 1 at risk; top risk Ross Law (23/100); top opportunity TechInc (82/100).",
 	counts: {
 		"total": 3,
@@ -130,7 +130,7 @@ var customer_health_report_default = {
 			"lead_value": 5e3,
 			"score": 82,
 			"bucket": "healthy",
-			"reason": "Qualified, contacted 903 day(s) ago, 0 related open item(s)",
+			"reason": "Qualified, contacted 905 day(s) ago, 0 related open item(s)",
 			"next_step": "Keep cadence and expand the account.",
 			"related_open_items": 0
 		},
@@ -142,7 +142,7 @@ var customer_health_report_default = {
 			"lead_value": 2500,
 			"score": 68,
 			"bucket": "watch",
-			"reason": "Contacted, contacted 904 day(s) ago, 0 related open item(s)",
+			"reason": "Contacted, contacted 906 day(s) ago, 0 related open item(s)",
 			"next_step": "Send a follow-up and confirm next milestone.",
 			"related_open_items": 0
 		},
@@ -154,14 +154,14 @@ var customer_health_report_default = {
 			"lead_value": 0,
 			"score": 23,
 			"bucket": "risk",
-			"reason": "Lost, contacted 901 day(s) ago, 0 related open item(s)",
+			"reason": "Lost, contacted 903 day(s) ago, 0 related open item(s)",
 			"next_step": "Escalate and re-engage before the lead stalls.",
 			"related_open_items": 0
 		}
 	]
 };
 var pipeline_risk_report_default = {
-	generated_at: "2026-06-29T08:07:03.674862+00:00",
+	generated_at: "2026-07-01T04:03:53.140838+00:00",
 	summary: "Pipeline risk radar: 2 active deal(s) scored; 2 at risk; 0 watch; 0 stable; top risk TechInc (99/100); highest value TechInc ($5,000).",
 	counts: {
 		"total": 2,
@@ -178,7 +178,7 @@ var pipeline_risk_report_default = {
 		"lead_value": 5e3,
 		"score": 99,
 		"bucket": "risk",
-		"reason": "Qualified, touched 903 day(s) ago, 0 related open item(s)",
+		"reason": "Qualified, touched 905 day(s) ago, 0 related open item(s)",
 		"next_step": "Escalate now and reset the close plan.",
 		"related_open_items": 0
 	}, {
@@ -189,13 +189,13 @@ var pipeline_risk_report_default = {
 		"lead_value": 2500,
 		"score": 87,
 		"bucket": "risk",
-		"reason": "Contacted, touched 904 day(s) ago, 0 related open item(s)",
+		"reason": "Contacted, touched 906 day(s) ago, 0 related open item(s)",
 		"next_step": "Escalate now and reset the close plan.",
 		"related_open_items": 0
 	}]
 };
 var approval_workflow_default = {
-	generated_at: "2026-06-29T08:07:03.676248+00:00",
+	generated_at: "2026-07-01T04:03:53.243872+00:00",
 	summary: "Approval workflow: no pending drafts.",
 	counts: {
 		"total_pending": 0,
@@ -207,8 +207,8 @@ var approval_workflow_default = {
 	items: []
 };
 var kpi_digest_report_default = {
-	generated_at: "2026-06-29T08:07:03.679931+00:00",
-	summary: "KPI digest: 4 day(s) of data; 2 KPI(s) declining — review flags; pipeline $7,500, 1 qualified, 0 overdue task(s).",
+	generated_at: "2026-07-01T04:03:53.365560+00:00",
+	summary: "KPI digest: 5 day(s) of data; 2 KPI(s) declining — review flags; pipeline $7,500, 1 qualified, 0 overdue task(s).",
 	kpis: {
 		"completed_tasks": {
 			"latest": 1,
@@ -286,12 +286,22 @@ var kpi_digest_report_default = {
 			"pipeline_value": 7500,
 			"lost_deals": 1,
 			"date": "2026-06-26"
+		},
+		{
+			"completed_tasks": 1,
+			"high_priority_open": 1,
+			"overdue_tasks": 0,
+			"stock_alerts": 1,
+			"qualified_leads": 1,
+			"pipeline_value": 7500,
+			"lost_deals": 1,
+			"date": "2026-06-30"
 		}
 	],
 	flags: ["high priority open is declining (latest 1, avg 0.8)", "stock alerts is declining (latest 1, avg 0.8)"]
 };
 var communication_timeline_default = {
-	generated_at: "2026-06-29T08:07:03.689781+00:00",
+	generated_at: "2026-07-01T04:03:53.399501+00:00",
 	summary: "Communication timeline: 3 account(s); 2 active; 3 total touches recorded.",
 	accounts: {
 		"TechInc": {
@@ -336,7 +346,7 @@ var communication_timeline_default = {
 	}
 };
 var recommendations_default = {
-	generated_at: "2026-06-29T08:07:03.690907+00:00",
+	generated_at: "2026-07-01T04:03:53.413155+00:00",
 	summary: "Recommendations: 7 action(s) suggested; 3 high-priority, 4 medium-priority. Top: Prioritise: Database Setup.",
 	counts: {
 		"total": 7,
@@ -354,14 +364,14 @@ var recommendations_default = {
 		{
 			"category": "crm",
 			"title": "Re-engage Ross Law before it goes cold",
-			"rationale": "This account scored 23/100 — risk bucket, Lost, contacted 901 day(s) ago, 0 related open item(s).",
+			"rationale": "This account scored 23/100 — risk bucket, Lost, contacted 903 day(s) ago, 0 related open item(s).",
 			"action": "Send a personal touchpoint email and update the CRM last contact date.",
 			"priority": "high"
 		},
 		{
 			"category": "pipeline",
 			"title": "Escalate TechInc — deal is slipping",
-			"rationale": "This deal ($5,000) has a pipeline risk score of 99/100 (Qualified, touched 903 day(s) ago, 0 related open item(s)).",
+			"rationale": "This deal ($5,000) has a pipeline risk score of 99/100 (Qualified, touched 905 day(s) ago, 0 related open item(s)).",
 			"action": "Reset the close plan, confirm stakeholder availability, and set a hard next-step date.",
 			"priority": "high"
 		},
@@ -396,7 +406,7 @@ var recommendations_default = {
 	]
 };
 var revenue_forecast_default = {
-	generated_at: "2026-06-29T08:07:03.698106+00:00",
+	generated_at: "2026-07-01T04:03:53.512925+00:00",
 	summary: "Revenue forecast: 2 active deal(s), $7,500 total pipeline; 30d: $2,875 projected (2 deal(s)); 60d: $2,875 projected (2 deal(s)); 90d: $2,875 projected (2 deal(s)).",
 	horizons: {
 		"30": {
@@ -423,7 +433,7 @@ var revenue_forecast_default = {
 		"lead_name": "John Doe",
 		"status": "Qualified",
 		"value": 5e3,
-		"age_days": 906,
+		"age_days": 907,
 		"days_remaining": 1,
 		"close_rate": .5,
 		"expected_revenue": 2500
@@ -432,7 +442,7 @@ var revenue_forecast_default = {
 		"lead_name": "Sara Smith",
 		"status": "Contacted",
 		"value": 2500,
-		"age_days": 905,
+		"age_days": 906,
 		"days_remaining": 1,
 		"close_rate": .15,
 		"expected_revenue": 375
@@ -441,8 +451,8 @@ var revenue_forecast_default = {
 	historical_close_rate: .5
 };
 var deal_progression_default = {
-	generated_at: "2026-06-29T08:07:03.700786+00:00",
-	summary: "Deal progression: 2 active deal(s); 2 stuck; 0 on track; oldest stuck: WebSoft (904d in 'Contacted').",
+	generated_at: "2026-07-01T04:03:53.536640+00:00",
+	summary: "Deal progression: 2 active deal(s); 2 stuck; 0 on track; oldest stuck: WebSoft (905d in 'Contacted').",
 	counts: {
 		"total": 2,
 		"stuck": 2,
@@ -454,26 +464,26 @@ var deal_progression_default = {
 		"lead_name": "Sara Smith",
 		"status": "Contacted",
 		"lead_value": 2500,
-		"age_days": 905,
-		"days_since_contact": 904,
+		"age_days": 906,
+		"days_since_contact": 905,
 		"stage_threshold_days": 14,
 		"stage_label": "stuck",
-		"next_step": "Push out of 'contacted' — last touched 904d ago, threshold is 14d."
+		"next_step": "Push out of 'contacted' — last touched 905d ago, threshold is 14d."
 	}, {
 		"company": "TechInc",
 		"lead_name": "John Doe",
 		"status": "Qualified",
 		"lead_value": 5e3,
-		"age_days": 906,
-		"days_since_contact": 903,
+		"age_days": 907,
+		"days_since_contact": 904,
 		"stage_threshold_days": 30,
 		"stage_label": "stuck",
-		"next_step": "Push out of 'qualified' — last touched 903d ago, threshold is 30d."
+		"next_step": "Push out of 'qualified' — last touched 904d ago, threshold is 30d."
 	}]
 };
 var renewal_reminders_default = {
-	generated_at: "2026-06-29T08:07:03.704982+00:00",
-	summary: "Renewal reminders: 2 due in next 90d; 2 overdue; 0 this month; 0 upcoming; next: WebSoft (Overdue by 539d).",
+	generated_at: "2026-07-01T04:03:53.606175+00:00",
+	summary: "Renewal reminders: 2 due in next 90d; 2 overdue; 0 this month; 0 upcoming; next: WebSoft (Overdue by 540d).",
 	counts: {
 		"total": 2,
 		"overdue": 2,
@@ -487,9 +497,9 @@ var renewal_reminders_default = {
 		"lead_value": 2500,
 		"renewal_date": "2025-01-06",
 		"renewal_field": "estimated (last contact + 1yr)",
-		"days_until": -539,
+		"days_until": -540,
 		"urgency": "overdue",
-		"label": "Overdue by 539d",
+		"label": "Overdue by 540d",
 		"next_step": "Renewal is overdue — reach out immediately to avoid lapse.",
 		"last_contact": "2024-01-07"
 	}, {
@@ -499,9 +509,9 @@ var renewal_reminders_default = {
 		"lead_value": 5e3,
 		"renewal_date": "2025-01-07",
 		"renewal_field": "estimated (last contact + 1yr)",
-		"days_until": -538,
+		"days_until": -539,
 		"urgency": "overdue",
-		"label": "Overdue by 538d",
+		"label": "Overdue by 539d",
 		"next_step": "Renewal is overdue — reach out immediately to avoid lapse.",
 		"last_contact": "2024-01-08"
 	}],
