@@ -799,6 +799,7 @@ end_hour      = run_hour if run_minute < 30 else run_hour + 1
 end_minute    = (run_minute + 30) % 60
 end_time_str  = f"{end_hour:02d}{end_minute:02d}00"
 today_compact = date.today().isoformat().replace("-", "")
+briefing_ical_description = briefing[:500].replace("\n", "\\n")
 
 ical = f"""BEGIN:VCALENDAR
 VERSION:2.0
@@ -807,7 +808,7 @@ BEGIN:VEVENT
 DTSTART:{today_compact}T{run_time_str}
 DTEND:{today_compact}T{end_time_str}
 SUMMARY:Morning Briefing — Score {overall_score}/100 {day_rating}
-DESCRIPTION:{briefing[:500].replace(chr(10), '\\n')}
+DESCRIPTION:{briefing_ical_description}
 END:VEVENT
 END:VCALENDAR"""
 
