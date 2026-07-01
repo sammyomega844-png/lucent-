@@ -1,0 +1,57 @@
+//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-CNDUBgb6.js
+var tsrStartManifest = () => ({ routes: {
+	__root__: {
+		filePath: "C:/Users/DELL/OneDrive/Documents/GitHub/lucent-/frontend-lovable/src/routes/__root.tsx",
+		children: [
+			"/",
+			"/help",
+			"/setup",
+			"/status"
+		],
+		preloads: ["/assets/index-Dsyv1B_i.js"],
+		scripts: [{ attrs: {
+			type: "module",
+			async: !0,
+			src: "/assets/index-Dsyv1B_i.js"
+		} }]
+	},
+	"/": {
+		filePath: "C:/Users/DELL/OneDrive/Documents/GitHub/lucent-/frontend-lovable/src/routes/index.tsx",
+		children: void 0,
+		preloads: [
+			"/assets/routes-BS9eoKeT.js",
+			"/assets/Shell-alc816wn.js",
+			"/assets/primitives-BZT8J_6N.js",
+			"/assets/mock-CUsHvBbv.js"
+		]
+	},
+	"/help": {
+		filePath: "C:/Users/DELL/OneDrive/Documents/GitHub/lucent-/frontend-lovable/src/routes/help.tsx",
+		children: void 0,
+		preloads: [
+			"/assets/help-EhVBMBCf.js",
+			"/assets/Shell-alc816wn.js",
+			"/assets/primitives-BZT8J_6N.js"
+		]
+	},
+	"/setup": {
+		filePath: "C:/Users/DELL/OneDrive/Documents/GitHub/lucent-/frontend-lovable/src/routes/setup.tsx",
+		children: void 0,
+		preloads: [
+			"/assets/setup-BBtdI0Fi.js",
+			"/assets/Shell-alc816wn.js",
+			"/assets/primitives-BZT8J_6N.js"
+		]
+	},
+	"/status": {
+		filePath: "C:/Users/DELL/OneDrive/Documents/GitHub/lucent-/frontend-lovable/src/routes/status.tsx",
+		children: void 0,
+		preloads: [
+			"/assets/status-BvP_JAtV.js",
+			"/assets/Shell-alc816wn.js",
+			"/assets/mock-CUsHvBbv.js"
+		]
+	}
+} });
+//#endregion
+export { tsrStartManifest };
