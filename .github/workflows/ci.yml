@@ -45,10 +45,13 @@ jobs:
           cache-dependency-path: frontend-lovable/package-lock.json
 
       - name: Install frontend dependencies
-        run: npm --prefix frontend-lovable ci
+        working-directory: frontend-lovable
+        run: npm ci
 
       - name: Frontend lint
-        run: npm --prefix frontend-lovable run lint -- --max-warnings=1000
+        working-directory: frontend-lovable
+        run: npm run lint -- --max-warnings=1000
 
       - name: Frontend build
-        run: npm --prefix frontend-lovable run build
+        working-directory: frontend-lovable
+        run: npm run build

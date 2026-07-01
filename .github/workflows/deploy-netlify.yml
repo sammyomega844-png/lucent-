@@ -21,10 +21,12 @@ jobs:
           cache-dependency-path: frontend-lovable/package-lock.json
 
       - name: Install frontend dependencies
-        run: npm --prefix frontend-lovable ci
+        working-directory: frontend-lovable
+        run: npm ci
 
       - name: Build frontend
-        run: npm --prefix frontend-lovable run build
+        working-directory: frontend-lovable
+        run: npm run build
 
       - name: Deploy to Netlify
         run: npx netlify-cli deploy --dir frontend-lovable/.output/public --prod --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN"
