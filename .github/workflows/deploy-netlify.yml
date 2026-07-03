@@ -28,7 +28,7 @@ jobs:
         working-directory: frontend-lovable
         run: npm run build
 
-      - name: Validate Netlify credentials and site
+      - name: Resolve Netlify site
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
@@ -38,21 +38,111 @@ jobs:
             exit 1
           fi
 
-          echo "NETLIFY_SITE_ID length: ${#NETLIFY_SITE_ID}"
+          python <<'PY'
+          import json
+          import os
+          import sys
+          import urllib.error
+          import urllib.request
+          from urllib.parse import quote, urlparse
 
-          status_code="$(curl -s -o netlify_site_response.json -w "%{http_code}" \
-            -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" \
-            "https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID")"
+          raw_value = os.environ["NETLIFY_SITE_ID"].strip()
+          token = os.environ["NETLIFY_AUTH_TOKEN"].strip()
+          github_env = os.environ["GITHUB_ENV"]
+          candidates = []
 
-          if [ "$status_code" != "200" ]; then
-            echo "::error::Netlify site lookup failed (HTTP $status_code)."
-            echo "::error::Check that NETLIFY_SITE_ID is the exact Site ID and NETLIFY_AUTH_TOKEN belongs to the same Netlify account/team."
-            cat netlify_site_response.json
-            exit 1
-          fi
+          def add_candidate(value: str | None) -> None:
+              if not value:
+                  return
+              candidate = value.strip().strip("/")
+              if candidate and candidate not in candidates:
+                  candidates.append(candidate)
+
+          add_candidate(raw_value)
+
+          parsed = urlparse(raw_value if "://" in raw_value else f"https://{raw_value}")
+          host = parsed.netloc or parsed.path.split("/")[0]
+          add_candidate(host)
+
+          if host.endswith(".netlify.app"):
+              add_candidate(host[: -len(".netlify.app")])
+
+          path_parts = [part for part in parsed.path.split("/") if part]
+          if host == "app.netlify.com":
+              for idx, part in enumerate(path_parts):
+                  if part == "sites" and idx + 1 < len(path_parts):
+                      add_candidate(path_parts[idx + 1])
+
+          headers = {"Authorization": " ".join(("Bearer", token))}
+
+          def fetch_json(url: str):
+              request = urllib.request.Request(url, headers=headers)
+              with urllib.request.urlopen(request) as response:
+                  return json.load(response)
+
+          def normalized_values(site: dict) -> set[str]:
+              values = set()
+              for key in ("id", "name", "custom_domain", "url", "ssl_url"):
+                  value = site.get(key)
+                  if not value:
+                      continue
+                  candidate = str(value).strip().strip("/")
+                  if not candidate:
+                      continue
+                  values.add(candidate)
+                  parsed_value = urlparse(candidate if "://" in candidate else f"https://{candidate}")
+                  parsed_host = parsed_value.netloc or parsed_value.path.split("/")[0]
+                  if parsed_host:
+                      values.add(parsed_host)
+                      if parsed_host.endswith(".netlify.app"):
+                          values.add(parsed_host[: -len(".netlify.app")])
+              return values
+
+          matched_site = None
+          for candidate in candidates:
+              try:
+                  matched_site = fetch_json(
+                      f"https://api.netlify.com/api/v1/sites/{quote(candidate, safe='')}"
+                  )
+                  break
+              except urllib.error.HTTPError as exc:
+                  if exc.code != 404:
+                      body = exc.read().decode("utf-8", errors="replace")
+                      print(f"::error::Netlify site lookup failed (HTTP {exc.code}).")
+                      print(body)
+                      sys.exit(1)
+
+          sites = []
+          if not matched_site:
+              try:
+                  sites = fetch_json("https://api.netlify.com/api/v1/sites?per_page=100")
+              except urllib.error.HTTPError as exc:
+                  body = exc.read().decode("utf-8", errors="replace")
+                  print(f"::error::Netlify site list failed (HTTP {exc.code}).")
+                  print(body)
+                  sys.exit(1)
+              matched_site = next((site for site in sites if set(candidates) & normalized_values(site)), None)
+
+          if not matched_site:
+              visible_sites = ", ".join(
+                  site.get("name") or site.get("id") or "<unnamed>"
+                  for site in sites[:10]
+              )
+              print("::error::Unable to match NETLIFY_SITE_ID to a Netlify site visible to this token.")
+              print(f"::error::Tried values: {', '.join(candidates)}")
+              if visible_sites:
+                  print(f"::error::Visible sites for this token: {visible_sites}")
+              sys.exit(1)
+
+          site_ref = matched_site["id"]
+          with open(github_env, "a", encoding="utf-8") as env_file:
+              env_file.write(f"NETLIFY_SITE_REF={site_ref}\n")
+
+          site_name = matched_site.get("name", site_ref)
+          print(f"::notice::Resolved Netlify site '{site_name}' to site id {site_ref}.")
+          PY
 
       - name: Deploy to Netlify
-        run: npx netlify-cli deploy --dir frontend-lovable/.output/public --prod --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN"
+        run: npx netlify-cli deploy --dir frontend-lovable/.output/public --prod --site "$NETLIFY_SITE_REF" --auth "$NETLIFY_AUTH_TOKEN"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

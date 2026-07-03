@@ -49,6 +49,8 @@ Add these GitHub repository secrets:
 - `NETLIFY_AUTH_TOKEN`
 - `NETLIFY_SITE_ID`
 
+`NETLIFY_SITE_ID` can be the Netlify site ID, the site name, or the Netlify site URL. The deploy workflow resolves it to the correct site automatically.
+
 Once secrets are set, every push to `main` auto-builds and deploys to Netlify.
 
 ## Vercel (alternative)
